@@ -1,21 +1,9 @@
 import { useState, useEffect } from "react";
+
 import { getTransactions, createTransaction } from "@components/Api.jsx";
 import { Navbar } from "@components/Navbar.jsx";
 import { Form } from "@components/Form.jsx";
-
-// eslint-disable-next-line react/prop-types
-const TransactionItems = ({ id, amount, category, date, is_income, description }) => {
-	return (
-		<article>
-			<p>{id}</p>
-			<p>{amount}</p>
-			<p>{category}</p>
-			<p>{date}</p>
-			<p>{is_income}</p>
-			<p>{description}</p>
-		</article>
-	);
-};
+import { TransactionItems } from "@components/TransactionItems.jsx";
 
 function App() {
 	const [transactions, setTransactions] = useState([]);
