@@ -1,10 +1,13 @@
-from fastapi import FastAPI, HTTPException, Depends
+from fastapi import FastAPI, HTTPException, Depends, Response, status
 from typing import Annotated, List
 from sqlalchemy.orm import Session
-from pydantic import BaseModel
-from database import SessionLocal, engine
-import models
+
 from fastapi.middleware.cors import CORSMiddleware
+
+from database import SessionLocal, engine
+from schemas import TransactionBase, TransactionModel
+import models
+import crud
 
 
 app = FastAPI()
@@ -22,22 +25,13 @@ app.add_middleware(
 )
 
 
-class TransactionBase(BaseModel):
-    amount: float
-    category: str
-    date: str
-    is_income: bool
-    description: str
-
-
-class TransactionModel(TransactionBase):
-    id: int
-
-    class Config:
-        from_attributes = True
-
-
 def get_db():
+    """
+    Crea y retorna una nueva sesión de base de datos.
+
+    Devuelve:
+        Un generador que produce la sesión.
+    """
     db = SessionLocal()
     try:
         yield db
@@ -50,16 +44,31 @@ db_dependency = Annotated[Session, Depends(get_db)]
 models.Base.metadata.create_all(bind=engine)
 
 
-@app.post("/api/v1/transactions/", response_model=TransactionModel)
-async def create_transaction(transaction: TransactionBase, db: db_dependency):
-    db_transaction = models.Transaction(**transaction.model_dump())
-    db.add(db_transaction)
-    db.commit()
-    db.refresh(db_transaction)
-    return db_transaction
+@app.post("/api/v1/transactions/", response_model=TransactionModel, status_code=201)
+def create_transaction(
+    transaction: TransactionBase, db: db_dependency
+) -> TransactionModel:
+    try:
+        return crud.create_transaction(db, transaction)
+    except:
+        raise HTTPException(status_code=400, detail="Bad request")
 
 
-@app.get("/api/v1/transactions/", response_model=List[TransactionModel])
-async def get_transactions(db: db_dependency, skip: int = 0, limit: int = 100):
-    transactions = db.query(models.Transaction).offset(skip).limit(limit).all()
+@app.get(
+    "/api/v1/transactions/", response_model=List[TransactionModel], status_code=200
+)
+async def get_transactions(
+    db: db_dependency, skip: int = 0, limit: int = 100
+) -> List[TransactionModel]:
+    transactions = crud.get_transactions(db, skip, limit)
+    if not transactions:
+        raise HTTPException(status_code=404, detail="Transactions not found")
     return transactions
+
+
+@app.delete("/api/v1/transactions/{id}", status_code=status.HTTP_204_NO_CONTENT)
+async def delete_transaction(id: int, db: db_dependency):
+    try:
+        crud.delete_transaction(db, id)
+    except:
+        raise HTTPException(status_code=404, detail="Transaction not found")
