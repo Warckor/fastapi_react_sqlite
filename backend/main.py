@@ -44,31 +44,27 @@ db_dependency = Annotated[Session, Depends(get_db)]
 models.Base.metadata.create_all(bind=engine)
 
 
-@app.post("/api/v1/transactions/", response_model=TransactionModel, status_code=201)
-def create_transaction(
-    transaction: TransactionBase, db: db_dependency
-) -> TransactionModel:
+@app.post("/api/v1/transactions/", tags=["Transactions"], response_model=TransactionModel, status_code=201)
+def create_transaction(transaction: TransactionBase, db: db_dependency) -> TransactionModel:
     try:
         return crud.create_transaction(db, transaction)
     except:
         raise HTTPException(status_code=400, detail="Bad request")
 
 
-@app.get(
-    "/api/v1/transactions/", response_model=List[TransactionModel], status_code=200
-)
-async def get_transactions(
-    db: db_dependency, skip: int = 0, limit: int = 100
-) -> List[TransactionModel]:
+@app.get("/api/v1/transactions/", tags=["Transactions"], response_model=List[TransactionModel], status_code=200)
+async def get_transactions(db: db_dependency, skip: int = 0, limit: int = 100) -> List[TransactionModel]:
     transactions = crud.get_transactions(db, skip, limit)
     if not transactions:
         raise HTTPException(status_code=404, detail="Transactions not found")
     return transactions
 
 
-@app.delete("/api/v1/transactions/{id}", status_code=status.HTTP_204_NO_CONTENT)
+@app.delete("/api/v1/transactions/{id}", tags=["Transactions"], status_code=status.HTTP_204_NO_CONTENT)
 async def delete_transaction(id: int, db: db_dependency):
     try:
-        crud.delete_transaction(db, id)
+        deleted = crud.delete_transaction(db, id)
+        if not deleted:
+            raise HTTPException(status_code=404, detail="Transaction not found")
     except:
         raise HTTPException(status_code=404, detail="Transaction not found")

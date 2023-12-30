@@ -17,7 +17,7 @@ def get_transactions(db: Session, skip: int = 0, limit: int = 100) -> List[Trans
     return db.query(Transaction).offset(skip).limit(limit).all()
 
 
-def delete_transaction(db: Session, id: int) -> None:
-    db.query(Transaction).filter(Transaction.id == id).delete()
+def delete_transaction(db: Session, deleted_id: int) -> int:
+    filtered = db.query(Transaction).filter_by(id=deleted_id).delete()
     db.commit()
-    db.refresh()
+    return filtered
