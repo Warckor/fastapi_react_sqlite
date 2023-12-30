@@ -1,4 +1,4 @@
-from database import Session
+from sqlalchemy.orm import Session
 from schemas import TransactionBase
 from models import Transaction
 
