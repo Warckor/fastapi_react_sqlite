@@ -16,6 +16,7 @@ function App() {
 	});
 
 	useEffect(() => {
+		if (!transactions) return;
 		getTransactions().then((data) => {
 			setTransactions(data);
 		});
@@ -51,11 +52,6 @@ function App() {
 				<Form handleInputChange={handleInputChange} handleFormSubmit={handleFormSubmit} {...formData} />
 				<section className='flex flex-col gap-y-10 mt-10'>
 					<TransactionItems transactions={transactions} />
-					{transactions.length <= 0 ? (
-						<p>Loading...</p>
-					) : (
-						transactions.map((transaction) => <TransactionItems {...transaction} key={transaction.id} />)
-					)}
 				</section>
 			</section>
 		</main>
