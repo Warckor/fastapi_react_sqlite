@@ -45,14 +45,19 @@ function App() {
 	};
 
 	return (
-		<main className='flex flex-col gap-y-5 bg-gray-200 min-h-screen'>
+		<main className='flex flex-col gap-y-5 bg-gradient-to-t from-slate-800 from-70% to-blue-900 min-h-screen'>
 			<Navbar />
-			<Form handleInputChange={handleInputChange} handleFormSubmit={handleFormSubmit} {...formData} />
-			{transactions.length <= 0 ? (
-				<p>Loading...</p>
-			) : (
-				transactions.map((transaction) => <TransactionItems {...transaction} key={transaction.id} />)
-			)}
+			<section className='flex flex-row gap-x-10 justify-around mt-10'>
+				<Form handleInputChange={handleInputChange} handleFormSubmit={handleFormSubmit} {...formData} />
+				<section className='flex flex-col gap-y-10 mt-10'>
+					<TransactionItems transactions={transactions} />
+					{transactions.length <= 0 ? (
+						<p>Loading...</p>
+					) : (
+						transactions.map((transaction) => <TransactionItems {...transaction} key={transaction.id} />)
+					)}
+				</section>
+			</section>
 		</main>
 	);
 }

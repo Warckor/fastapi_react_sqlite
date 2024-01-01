@@ -2,14 +2,24 @@ import propTypes from "prop-types";
 
 export const TransactionItems = ({ id, amount, category, date, is_income, description }) => {
 	return (
-		<article>
-			<p>{id}</p>
-			<p>{amount}</p>
-			<p>{category}</p>
-			<p>{date}</p>
-			<p>{is_income}</p>
-			<p>{description}</p>
-		</article>
+		<table>
+			<tr>
+				<th>ID</th>
+				<th>Amount</th>
+				<th>Category</th>
+				<th>Date</th>
+				<th>Income</th>
+				<th>Description</th>
+			</tr>
+			<tr>
+				<td>{id}</td>
+				<td>{amount}</td>
+				<td>{category}</td>
+				<td>{date}</td>
+				<td>{is_income == true ? "Income" : "Outcome"}</td>
+				<td>{description}</td>
+			</tr>
+		</table>
 	);
 };
 

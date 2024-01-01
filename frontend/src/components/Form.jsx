@@ -3,7 +3,9 @@ import PropTypes from "prop-types";
 export const Form = ({ handleInputChange, handleFormSubmit, date, amount, category, is_income, description }) => {
 	return (
 		<div>
-			<form className='flex flex-col justify-center items-start m-5 px-5 gap-4' onSubmit={handleFormSubmit}>
+			<form
+				className='flex flex-col justify-center items-start gap-4 border-slate-100 border-solid border-2 p-5 rounded-xl bg-blue-900/20'
+				onSubmit={handleFormSubmit}>
 				<div className='flex gap-y-1 flex-col'>
 					<label className='font-semibold italic' htmlFor='date'>
 						Date
@@ -60,7 +62,6 @@ export const Form = ({ handleInputChange, handleFormSubmit, date, amount, catego
 						id='is_income'
 						value={is_income}
 						onChange={handleInputChange}
-						defaultChecked
 					/>
 				</div>
 				<div className='flex gap-y-1 flex-col'>
@@ -77,7 +78,11 @@ export const Form = ({ handleInputChange, handleFormSubmit, date, amount, catego
 						onChange={handleInputChange}
 					/>
 				</div>
-				<button type='submit'>Create Transaction</button>
+				<button
+					className='rounded-xl border-2 border-slate-400 px-2 w-[360px] bg-blue-800 hover:bg-blue-500 hover:transform hover:scale-105 hover:text-slate-800 mt-5'
+					type='submit'>
+					Create Transaction
+				</button>
 			</form>
 		</div>
 	);
