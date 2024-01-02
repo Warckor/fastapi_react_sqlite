@@ -5,6 +5,7 @@ import { getTransactions, createTransaction, deleteTransaction } from "@componen
 import { Navbar } from "@components/Navbar.jsx";
 import { Form } from "@components/Form.jsx";
 import { TransactionItems } from "@components/TransactionItems.jsx";
+import { Footer } from "@components/Footer";
 
 function App() {
 	const [transactions, setTransactions] = useState([]);
@@ -55,14 +56,15 @@ function App() {
 	};
 
 	return (
-		<main className='flex flex-col gap-y-5 bg-gradient-to-t from-slate-800 from-70% to-blue-900 min-h-screen'>
+		<main className='flex flex-col justify-between gap-y-5 bg-gradient-to-t from-slate-800 from-70% to-blue-900 min-h-screen'>
 			<Navbar />
 			<section className='flex flex-col xl:flex-row justify-around mt-10'>
 				<Form handleInputChange={handleInputChange} handleFormSubmit={handleFormSubmit} {...formData} />
-				<section className='flex flex-col mt-2'>
+				<article className='flex flex-col mt-2'>
 					<TransactionItems handleDeleteTransaction={handleDeleteTransaction} transactions={transactions} />
-				</section>
+				</article>
 			</section>
+			<Footer />
 		</main>
 	);
 }
