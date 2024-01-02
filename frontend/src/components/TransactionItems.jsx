@@ -5,7 +5,7 @@ export const TransactionItems = ({ handleDeleteTransaction, transactions }) => {
 		<table className='border-collapse border border-slate-400 bg-gradient-to-t from-slate-800 from-70% to-blue-900'>
 			<thead className='border-slate-400'>
 				<tr>
-					<th>ID</th>
+					<th className='hidden sm:table-cell'>ID</th>
 					<th>Amount</th>
 					<th>Category</th>
 					<th>Date</th>
@@ -25,7 +25,7 @@ export const TransactionItems = ({ handleDeleteTransaction, transactions }) => {
 const Item = ({ handleDeleteTransaction, id, amount, category, date, is_income, description }) => {
 	return (
 		<tr key={id} className='border-t h-10 text-center'>
-			<td className='w-10'>{id}</td>
+			<td className='w-10 hidden sm:table-cell'>{id}</td>
 			<td className='w-10'>{amount}</td>
 			<td className='w-32'>{category}</td>
 			<td className='w-32'>{date}</td>
