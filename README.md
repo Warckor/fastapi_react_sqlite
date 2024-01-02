@@ -17,10 +17,10 @@ Para almacenar la información que se genera y se muestra se utiliza como base d
 * Muestra listado de todo lo incluido a través del formulario.
 
 ## 🚧 Todos
-- [ ] Mostrar los registros ordenados y con formato.
+- [x] Mostrar los registros ordenados y con formato.
 - [ ] Añadir paginación?
-- [ ] Añadir un modo de eliminar registros.
-- [ ] Trabajar más con el diseño de la interfaz.
+- [x] Añadir un modo de eliminar registros.
+- [x] Trabajar más con el diseño de la interfaz.
 - [ ] Añadir cálculos totales.
 - [ ] Cambiar tipo del valor "Date" por un tipo fecha. 
 
