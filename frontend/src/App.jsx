@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
 
-import { getTransactions, createTransaction } from "@components/Api.jsx";
+import { getTransactions, createTransaction, deleteTransaction } from "@components/Api.jsx";
 import { Navbar } from "@components/Navbar.jsx";
 import { Form } from "@components/Form.jsx";
 import { TransactionItems } from "@components/TransactionItems.jsx";
@@ -45,13 +46,21 @@ function App() {
 		});
 	};
 
+	const handleDeleteTransaction = (e) => {
+		deleteTransaction(e.target.attributes.id.value).then(() => {
+			getTransactions().then((data) => {
+				setTransactions(data);
+			});
+		});
+	};
+
 	return (
 		<main className='flex flex-col gap-y-5 bg-gradient-to-t from-slate-800 from-70% to-blue-900 min-h-screen'>
 			<Navbar />
 			<section className='flex flex-row justify-around mt-10'>
 				<Form handleInputChange={handleInputChange} handleFormSubmit={handleFormSubmit} {...formData} />
 				<section className='flex flex-col mt-2'>
-					<TransactionItems transactions={transactions} />
+					<TransactionItems handleDeleteTransaction={handleDeleteTransaction} transactions={transactions} />
 				</section>
 			</section>
 		</main>

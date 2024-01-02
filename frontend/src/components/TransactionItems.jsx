@@ -1,6 +1,6 @@
 import propTypes from "prop-types";
 
-export const TransactionItems = ({ transactions }) => {
+export const TransactionItems = ({ handleDeleteTransaction, transactions }) => {
 	return (
 		<table className='border-collapse border border-slate-400 bg-gradient-to-t from-slate-800 from-70% to-blue-900'>
 			<thead className='border-slate-400'>
@@ -15,14 +15,14 @@ export const TransactionItems = ({ transactions }) => {
 			</thead>
 			{transactions.map((transaction) => (
 				<tbody key={transaction.id} className=''>
-					<Item {...transaction} />
+					<Item handleDeleteTransaction={handleDeleteTransaction} {...transaction} />
 				</tbody>
 			))}
 		</table>
 	);
 };
 
-const Item = ({ id, amount, category, date, is_income, description }) => {
+const Item = ({ handleDeleteTransaction, id, amount, category, date, is_income, description }) => {
 	return (
 		<tr key={id} className='border-t h-10 text-center'>
 			<td className='w-10'>{id}</td>
@@ -31,15 +31,25 @@ const Item = ({ id, amount, category, date, is_income, description }) => {
 			<td className='w-32'>{date}</td>
 			<td className='w-32'>{is_income == true ? "Income" : "Outcome"}</td>
 			<td className='w-52'>{description}</td>
+			<td className='w-32'>
+				<button
+					className='border rounded-xl px-5 bg-red-800 hover:bg-red-500 hover:text-black hover:scale-105 hover:transition-transform'
+					onClick={handleDeleteTransaction}
+					id={id}>
+					Delete
+				</button>
+			</td>
 		</tr>
 	);
 };
 
 TransactionItems.propTypes = {
+	handleDeleteTransaction: propTypes.func.isRequired,
 	transactions: propTypes.array.isRequired,
 };
 
 Item.propTypes = {
+	handleDeleteTransaction: propTypes.func.isRequired,
 	id: propTypes.number.isRequired,
 	amount: propTypes.number.isRequired,
 	category: propTypes.string.isRequired,
