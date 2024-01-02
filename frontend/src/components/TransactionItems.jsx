@@ -2,8 +2,8 @@ import propTypes from "prop-types";
 
 export const TransactionItems = ({ transactions }) => {
 	return (
-		<table>
-			<thead>
+		<table className='border-collapse border border-slate-400 bg-gradient-to-t from-slate-800 from-70% to-blue-900'>
+			<thead className='border-slate-400'>
 				<tr>
 					<th>ID</th>
 					<th>Amount</th>
@@ -14,7 +14,9 @@ export const TransactionItems = ({ transactions }) => {
 				</tr>
 			</thead>
 			{transactions.map((transaction) => (
-				<Item key={transaction.id} {...transaction} />
+				<tbody key={transaction.id} className=''>
+					<Item {...transaction} />
+				</tbody>
 			))}
 		</table>
 	);
@@ -22,16 +24,14 @@ export const TransactionItems = ({ transactions }) => {
 
 const Item = ({ id, amount, category, date, is_income, description }) => {
 	return (
-		<tbody key={id}>
-			<tr>
-				<td>{id}</td>
-				<td>{amount}</td>
-				<td>{category}</td>
-				<td>{date}</td>
-				<td>{is_income == true ? "Income" : "Outcome"}</td>
-				<td>{description}</td>
-			</tr>
-		</tbody>
+		<tr key={id} className='border-t h-10 text-center'>
+			<td className='w-10'>{id}</td>
+			<td className='w-10'>{amount}</td>
+			<td className='w-32'>{category}</td>
+			<td className='w-32'>{date}</td>
+			<td className='w-32'>{is_income == true ? "Income" : "Outcome"}</td>
+			<td className='w-52'>{description}</td>
+		</tr>
 	);
 };
 

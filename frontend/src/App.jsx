@@ -48,9 +48,9 @@ function App() {
 	return (
 		<main className='flex flex-col gap-y-5 bg-gradient-to-t from-slate-800 from-70% to-blue-900 min-h-screen'>
 			<Navbar />
-			<section className='flex flex-row gap-x-10 justify-around mt-10'>
+			<section className='flex flex-row justify-around mt-10'>
 				<Form handleInputChange={handleInputChange} handleFormSubmit={handleFormSubmit} {...formData} />
-				<section className='flex flex-col gap-y-10 mt-10'>
+				<section className='flex flex-col mt-2'>
 					<TransactionItems transactions={transactions} />
 				</section>
 			</section>

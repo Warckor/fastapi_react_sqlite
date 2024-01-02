@@ -4,7 +4,7 @@ export const Form = ({ handleInputChange, handleFormSubmit, date, amount, catego
 	return (
 		<div>
 			<form
-				className='flex flex-col justify-center items-start gap-4 border-slate-100 border-solid border-2 p-5 rounded-xl bg-blue-900/20'
+				className='flex flex-col justify-center items-start gap-4 border-slate-100 border-solid border-2 p-5 rounded-xl bg-gradient-to-t from-slate-800 from-70% to-blue-900'
 				onSubmit={handleFormSubmit}>
 				<div className='flex gap-y-1 flex-col'>
 					<label className='font-semibold italic' htmlFor='date'>
