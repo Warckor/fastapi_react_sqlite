@@ -2,7 +2,7 @@ import propTypes from "prop-types";
 
 export const TransactionItems = ({ handleDeleteTransaction, transactions }) => {
 	return (
-		<table className='border-collapse border border-slate-400 bg-gradient-to-t from-slate-800 from-70% to-blue-900'>
+		<table className='border-collapse border border-slate-400 bg-gradient-to-t from-slate-800 from-70% to-blue-900 justify-items-start'>
 			<thead className='border-slate-400'>
 				<tr>
 					<th className='hidden sm:table-cell'>ID</th>
