@@ -1,4 +1,6 @@
-from fastapi import FastAPI, HTTPException, Depends, Response, status
+from fastapi import FastAPI, HTTPException, Depends, Request, Response, status
+from fastapi.exceptions import RequestValidationError
+from fastapi.responses import JSONResponse
 from typing import Annotated, List
 from sqlalchemy.orm import Session
 
@@ -44,12 +46,17 @@ db_dependency = Annotated[Session, Depends(get_db)]
 models.Base.metadata.create_all(bind=engine)
 
 
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request: Request, exc: RequestValidationError):
+    return JSONResponse(
+        status_code=status.HTTP_400_BAD_REQUEST,
+        content={"errors": exc.errors()},
+    )
+
+
 @app.post("/api/v1/transactions/", tags=["Transactions"], response_model=TransactionModel, status_code=201)
 def create_transaction(transaction: TransactionBase, db: db_dependency) -> TransactionModel:
-    try:
-        return crud.create_transaction(db, transaction)
-    except:
-        raise HTTPException(status_code=400, detail="Bad request")
+    return crud.create_transaction(db, transaction)
 
 
 @app.get("/api/v1/transactions/", tags=["Transactions"], response_model=List[TransactionModel], status_code=200)

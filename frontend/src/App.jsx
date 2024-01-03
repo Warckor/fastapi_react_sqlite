@@ -58,7 +58,7 @@ function App() {
 	return (
 		<main className='flex flex-col justify-between gap-y-5 bg-gradient-to-t from-slate-800 from-70% to-blue-900 min-h-screen min-w-fit'>
 			<Navbar />
-			<section className='flex flex-col xl:flex-row gap-x-10 xl:gap-32 justify-around mt-10 md:justify-center md:items-center sm:justify-center sm:items-center'>
+			<section className='flex flex-col xl:flex-row lg:flex-row gap-x-10 xl:gap-32 justify-around mt-10 lg:items-start md:justify-center md:items-center sm:justify-center sm:items-center pb-10'>
 				<Form handleInputChange={handleInputChange} handleFormSubmit={handleFormSubmit} {...formData} />
 				<article className='flex flex-col mt-2'>
 					<TransactionItems handleDeleteTransaction={handleDeleteTransaction} transactions={transactions} />

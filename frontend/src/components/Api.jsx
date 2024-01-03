@@ -1,3 +1,5 @@
+import { handleCreateError } from "../handlers/HandleCreateError.js";
+
 export const getTransactions = async () => {
 	const response = await fetch("http://localhost:8000/api/v1/transactions");
 	const data = await response.json();
@@ -13,6 +15,12 @@ export const createTransaction = async (transaction) => {
 		body: JSON.stringify(transaction),
 	});
 	const data = await response.json();
+
+	if (!response.ok) {
+		handleCreateError({ data });
+		throw new Error(data.message);
+	}
+
 	return data;
 };
 

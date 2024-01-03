@@ -1,8 +1,8 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 class TransactionBase(BaseModel):
-    amount: float | int
+    amount: float
     category: str
     date: str
     is_income: bool
